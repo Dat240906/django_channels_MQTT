@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MQTT</title>
+
+    <link rel="stylesheet" href="{% static 'mqtt_app/css/style.css'%}" />
+  </head>
+  <body>
+    <div class="info border pd-6 mg-6 bdr-7">
+      <h2>Add Device</h2>
+      <form id="deviceForm">
+        <label for="topic">Topic:</label>
+        <input type="text" id="topic" name="topic" autofocus />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+
+    <div class="info border pd-6 mg-6 bdr-7">
+      <h2>Connected Devices</h2>
+      <div class="container_divice w-100 ovf-anw">
+        <ul></ul>
+      </div>
+    </div>
+    <div class="info border pd-6 mg-6 bdr-7">
+      <h2>Logs</h2>
+      <div class="container_log w-100 ovf-anw">
+        <ul></ul>
+      </div>
+    </div>
+    <script src="{% static 'mqtt_app/js/main.js'%}"></script>
+  </body>
+</html>

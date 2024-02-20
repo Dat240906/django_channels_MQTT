@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ANALYSIS DATA</title>
+    <link rel="stylesheet" href="{% static 'mqtt_app/css/style.css'%}" />
+  </head>
+  <body>
+    <div class="info border pd-6 mg-6 bdr-7">
+      <h4>Topic: {{data.Topic}}</h4>
+      <h4>QoS: {{data.QoS}}</h4>
+      <h4>Hex_Str: {{data.Hex_Str}}</h4>
+    </div>
+
+    <div class="info border pd-6 mg-6 bdr-7">
+      {%for item in data.Header_Result%} {% if forloop.counter == 1%}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 4 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 7 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 14 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 15 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 18 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 21 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 24 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% elif forloop.counter == 27 %}
+      <h4>{{item}}</h4>
+      <br />
+      {% else %}
+      <p>{{item}}</p>
+      {% endif %} {%endfor%}
+    </div>
+  </body>
+</html>
