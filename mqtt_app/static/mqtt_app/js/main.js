@@ -1,12 +1,15 @@
 function add_divice(topic) {
   var ul = document.querySelector(".container_divice ul");
-  ul.insertAdjacentHTML("afterbegin", `<li type="">${topic}</li>`);
+  ul.insertAdjacentHTML(
+    "afterbegin",
+    `<li class='container-device-log' >${topic}</li>`
+  );
 }
 function add_log(topic, content_hex, qos) {
   var ul = document.querySelector(".container_log ul");
   ul.insertAdjacentHTML(
     "afterbegin",
-    `<li type="" ><a target="_blank" href="/data/${topic}/${qos}/${content_hex}/">Topic: ${topic} QoS: ${qos} ${content_hex}</a></li>`
+    `<li class="container-device-log" style="cursor: pointer;"><a target="_blank" style="text-decoration: none;" href="/data/${topic}/${qos}/${content_hex}/" >Topic: ${topic} QoS: ${qos} ${content_hex}</a></li>`
   );
 }
 // get dữ liệu thiết bị
@@ -45,6 +48,12 @@ ws.onmessage = (event) => {
     if (data.status == "log") {
       add_log(data.topic, data.content_hex, data.qos);
     }
+    if (data.status == "topic_exist") {
+    } else if (data.status == "created_successfully") {
+      const topic = document.getElementById("topic");
+      add_divice(topic.value);
+      document.getElementById("topic").value = "";
+    }
   } catch (error) {
     console.error(error);
   }
@@ -66,6 +75,4 @@ document
         topic: topic.value,
       })
     );
-    add_divice(topic.value);
-    document.getElementById("topic").value = "";
   });

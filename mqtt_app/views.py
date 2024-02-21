@@ -1,10 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.conf import settings
 from .mqtt_utils import client as mqtt_client
+from django.contrib.auth import authenticate
 import json
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.cache import cache
+from django.views import View
 
+
+
+USERNAME =  'admin_acc'
+PASSWORD =  'admin365!@'
 def publish_message(request):
     request_data = json.loads(request.body)
     rc, mid = mqtt_client.publish(request_data['topic'], request_data['msg'])
@@ -13,9 +20,32 @@ def publish_message(request):
 
 
 def index(request):
-    return render(request, 'index.html')
+    is_login = request.session.get('is_login', False)
+    if is_login:
+        return render(request, 'index.html')
+
+    return redirect('login')
 
 
+class login(View):
+    global USERNAME, PASSWORD
+    def get(self, request):
+        return render(request, 'login.html')
+    def post(self, request):
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # Đăng nhập người dùng
+            request.session['is_login'] = True
+            return redirect('index')
+        else:
+            request.session['is_login'] = False
+            
+            # Xử lý trường hợp đăng nhập không thành công
+            return render(request, 'login.html', {'error_message': 'Login failed!'})
 def get_all_topics(request):
 
     list_all_topics = cache.get('all_topics', [])

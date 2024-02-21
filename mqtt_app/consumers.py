@@ -63,8 +63,19 @@ class Boardcart(WebsocketConsumer):
         data = json.loads(text_data)
        
         if data['status'] == 'create_topic':
+            if "+" in data['topic'] or "#" in data['topic']:
+                return 
             all_topic_cache = cache.get('all_topics')
+            if data['topic'] in all_topic_cache:
+                return self.send(text_data = json.dumps({
+                    'status': 'topic_exist'
+                }))
             all_topic_cache.append(data['topic'])
             cache.set('all_topics', all_topic_cache, settings.CACHE_TIMEOUT)
-
-            self.client.subscribe(data['topic'])
+            try:
+                self.client.subscribe(data['topic'])
+                return self.send(text_data = json.dumps({
+                        'status': 'created_successfully'
+                    }))
+            except:
+                pass

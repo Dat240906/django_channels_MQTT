@@ -9,7 +9,7 @@ function add_log(topic, content_hex, qos) {
   var ul = document.querySelector(".container_log ul");
   ul.insertAdjacentHTML(
     "afterbegin",
-    `<li class="container-device-log" style="cursor: pointer;"><a target="_blank" style="text-decoration: none;" href="/data/${topic}/${qos}/${content_hex}/" >Topic: ${topic} QoS: ${qos} ${content_hex}</a></li>`
+    `<li class='container-device-log'style="cursor: pointer;corlor:black"><a style="text-decoration: none;  target="_blank" href="/data/${topic}/${qos}/${content_hex}/">Topic: ${topic} QoS: ${qos} ${content_hex}</a></li>`
   );
 }
 // get dữ liệu thiết bị
